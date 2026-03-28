@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRÛLÉ — Artisan Coffee</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Brûlé</div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">Story</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#info">Visit</a></li>
+  </ul>
+  <a href="#info" class="nav-cta">Reserve a Table</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <span class="hero-tag">Est. 2019 · Artisan Coffee</span>
+    <h1 class="hero-title">
+      <span class="line">Where every</span>
+      <span class="line">cup tells</span>
+      <span class="line">a story.</span>
+    </h1>
+    <p class="hero-desc">
+      Slow-roasted single-origin beans, crafted with intention. A space where time slows down and ritual becomes pleasure.
+    </p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary"><span>Explore Menu</span></a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <div class="steam"></div>
+      <div class="steam"></div>
+      <div class="steam"></div>
+      <svg class="coffee-svg" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cup body -->
+        <path d="M60 140 L80 240 Q150 260 220 240 L240 140 Z" fill="rgba(245,240,232,0.15)" stroke="rgba(245,240,232,0.3)" stroke-width="2"/>
+        <!-- Saucer -->
+        <ellipse cx="150" cy="250" rx="110" ry="18" fill="rgba(245,240,232,0.1)" stroke="rgba(245,240,232,0.25)" stroke-width="1.5"/>
+        <!-- Coffee surface -->
+        <ellipse cx="150" cy="140" rx="90" ry="16" fill="rgba(139,82,40,0.6)" stroke="rgba(200,132,58,0.5)" stroke-width="1"/>
+        <!-- Latte art spiral -->
+        <path d="M150 135 Q165 128 170 140 Q165 152 150 148 Q135 144 132 132 Q138 118 155 122" stroke="rgba(245,240,232,0.5)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Handle -->
+        <path d="M240 160 Q280 160 280 190 Q280 220 240 220" stroke="rgba(245,240,232,0.3)" stroke-width="3" fill="none"/>
+        <!-- Decorative rim -->
+        <ellipse cx="150" cy="140" rx="90" ry="16" fill="none" stroke="rgba(200,132,58,0.8)" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+  <span class="hero-scroll">Scroll</span>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span> Single Origin Beans</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Hand-Poured Espresso</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Artisan Pastries</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Slow Roasted</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Morning Rituals</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Ethically Sourced</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Single Origin Beans</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Hand-Poured Espresso</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Artisan Pastries</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Slow Roasted</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Morning Rituals</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Ethically Sourced</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual reveal-left">
+    <div class="about-pattern"></div>
+    <div class="about-number">2019</div>
+    <div class="about-badge">
+      <div class="about-badge-inner">
+        <div>
+          <div class="about-badge-year">V</div>
+          <div class="about-badge-text">Years<br>of Craft</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-content">
+    <p class="section-tag reveal" data-delay="1">Our Story</p>
+    <h2 class="section-title reveal" data-delay="2">Coffee as <em>ceremony</em>, not routine.</h2>
+    <p class="section-body reveal" data-delay="3">
+      Born from a love of unhurried mornings, Brûlé was founded by two friends who believed great coffee deserved the same reverence as fine wine. We source directly from mountain farms in Ethiopia, Colombia, and Guatemala.
+    </p>
+    <p class="section-body reveal" data-delay="4">
+      Every cup is a conversation between grower and drinker — a thread connecting a Guatemalan hillside to your quiet corner table.
+    </p>
+    <div class="stats-row reveal" data-delay="5">
+      <div class="stat">
+        <span class="stat-num">12</span>
+        <span class="stat-label">Origins</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">34K</span>
+        <span class="stat-label">Happy Guests</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4.9★</span>
+        <span class="stat-label">Rating</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="menu-header reveal">
+    <h2 class="menu-title">Our<br><em>Selections</em></h2>
+    <p class="menu-subtitle">Crafted with precision and reverence for the bean</p>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card reveal" data-delay="1">
+      <div class="menu-card-icon">☕</div>
+      <h3 class="menu-card-name">Signature Espresso</h3>
+      <p class="menu-card-desc">Double-shot from Ethiopian Yirgacheffe. Deep cocoa notes with a bright citrus finish.</p>
+      <div class="menu-card-footer">
+        <span class="menu-price">$4.50</span>
+        <span class="menu-tag">Bestseller</span>
+      </div>
+    </div>
+    <div class="menu-card reveal" data-delay="2">
+      <div class="menu-card-icon">🫧</div>
+      <h3 class="menu-card-name">Cloud Latte</h3>
+      <p class="menu-card-desc">Velvety oat milk micro-foam over our house blend. Delicate rosetta art on every pour.</p>
+      <div class="menu-card-footer">
+        <span class="menu-price">$6.00</span>
+        <span class="menu-tag">Signature</span>
+      </div>
+    </div>
+    <div class="menu-card reveal" data-delay="3">
+      <div class="menu-card-icon">🧊</div>
+      <h3 class="menu-card-name">Cold Slow Brew</h3>
+      <p class="menu-card-desc">18-hour cold-dripped Colombian. Extraordinarily smooth, naturally sweet, zero bitterness.</p>
+      <div class="menu-card-footer">
+        <span class="menu-price">$7.00</span>
+        <span class="menu-tag">Seasonal</span>
+      </div>
+    </div>
+    <div class="menu-card reveal" data-delay="4">
+      <div class="menu-card-icon">🍫</div>
+      <h3 class="menu-card-name">Dark Cortado</h3>
+      <p class="menu-card-desc">Guatemalan dark roast pulled ristretto-style. Intense, bittersweet, with notes of smoked caramel.</p>
+      <div class="menu-card-footer">
+        <span class="menu-price">$5.00</span>
+        <span class="menu-tag">Bold</span>
+      </div>
+    </div>
+    <div class="menu-card reveal" data-delay="5">
+      <div class="menu-card-icon">🌸</div>
+      <h3 class="menu-card-name">Lavender Fog</h3>
+      <p class="menu-card-desc">Earl Grey–steeped oat milk with house lavender syrup and a feather of cream.</p>
+      <div class="menu-card-footer">
+        <span class="menu-price">$6.50</span>
+        <span class="menu-tag">Fan Fav</span>
+      </div>
+    </div>
+    <div class="menu-card reveal" data-delay="6">
+      <div class="menu-card-icon">🥐</div>
+      <h3 class="menu-card-name">Morning Pastry</h3>
+      <p class="menu-card-desc">Rotating selection of laminated pastries — croissants, kouign-amann, and seasonal fruit tarts.</p>
+      <div class="menu-card-footer">
+        <span class="menu-price">$4.00</span>
+        <span class="menu-tag">Fresh Daily</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="experience-content">
+    <p class="section-tag reveal">The Experience</p>
+    <h2 class="section-title reveal" data-delay="1">A space <em>designed</em><br>for presence.</h2>
+    <p class="section-body reveal" data-delay="2">
+      We obsess over every detail — the weight of the cup, the softness of morning light through our skylights, the quiet jazz that never overwhelms. Brûlé is a sanctuary.
+    </p>
+    <ul class="feature-list reveal" data-delay="3">
+      <li>Private brew sessions with our head barista</li>
+      <li>Curated vinyl soundtrack, daily rotation</li>
+      <li>Bean-to-cup tasting flights</li>
+      <li>Monthly single-origin pop-ups</li>
+      <li>Specialty workspace with natural light</li>
+    </ul>
+  </div>
+  <div class="experience-visual reveal-right">
+    <div class="exp-img exp-img-1">
+      <div class="exp-pattern"></div>
+      <span class="exp-label">The Space</span>
+    </div>
+    <div class="exp-img exp-img-2">
+      <div class="exp-pattern"></div>
+      <span class="exp-label">The Craft</span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <p class="section-tag reveal" style="color: rgba(26,15,7,0.5);">What Guests Say</p>
+  <blockquote class="testimonial-quote reveal" id="testimonial-text" data-delay="2">
+    "Brûlé is the rare place where the atmosphere is as carefully made as the coffee. I leave feeling genuinely restored."
+  </blockquote>
+  <p class="testimonial-author reveal" id="testimonial-author" data-delay="3">— Margot L., Regular Guest</p>
+  <div class="testimonial-dots">
+    <div class="t-dot active" onclick="setTestimonial(0)"></div>
+    <div class="t-dot" onclick="setTestimonial(1)"></div>
+    <div class="t-dot" onclick="setTestimonial(2)"></div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section" id="info">
+  <div class="info-block reveal-left">
+    <h3 class="info-title">Hours</h3>
+    <ul class="hours-list">
+      <li><span class="day">Monday – Friday</span><span>7:00 AM – 7:00 PM</span></li>
+      <li><span class="day">Saturday</span><span>8:00 AM – 8:00 PM</span></li>
+      <li><span class="day">Sunday</span><span>9:00 AM – 5:00 PM</span></li>
+      <li><span class="day">Public Holidays</span><span>10:00 AM – 4:00 PM</span></li>
+    </ul>
+  </div>
+  <div class="info-block reveal-right">
+    <h3 class="info-title">Find Us</h3>
+    <p class="address-line">
+      14 Roasting Lane,<br>
+      The Old Quarter,<br>
+      Brooklyn, NY 11201
+    </p>
+    <a href="#" class="map-link">Open in Maps</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Brûlé</div>
+  <div class="footer-center">
+    © 2026 Brûlé Coffee Co.<br>All rights reserved.
+  </div>
+  <div class="footer-social">
+    <a href="#">Instagram</a>
+    <a href="#">Pinterest</a>
+    <a href="#">Newsletter</a>
+  </div>
+</footer>
+ <script src="script.js"></script>
+</body>
+</html>
