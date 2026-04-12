@@ -7,6 +7,8 @@ on:
 
 env:
   IMAGE_NAME: brule
+  DEPLOYMENT_NAME: brule-deployment
+  CONTAINER_NAME: brule
 
 jobs:
   build-deploy:
@@ -36,17 +38,31 @@ jobs:
       run: |
         docker push ${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
+    # ✅ Setup kubeconfig (REAL cluster only)
     - name: Setup Kubeconfig
       run: |
-        echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > kubeconfig
-        echo "KUBECONFIG=$PWD/kubeconfig" >> $GITHUB_ENV
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
 
-    - name: Deploy to Kubernetes
+    # ✅ Verify cluster (debug)
+    - name: Verify Cluster
+      run: |
+        kubectl cluster-info
+        kubectl get nodes
+
+    # ✅ Apply base YAML
+    - name: Apply Manifests
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
-        kubectl set image deployment/myapp-deployment myapp=${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-    - name: Check Rollout Status
+    # ✅ Inject new image (dynamic)
+    - name: Update Image
       run: |
-        kubectl rollout status deployment/myapp-deployment
+        kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
+        ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+
+    # ✅ Zero downtime rollout
+    - name: Rollout Status
+      run: |
+        kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }}
