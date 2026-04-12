@@ -731,3 +731,232 @@
     .menu-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .menu-subtitle { text-align: left; }
   }
+
+
+
+  /* =====================extended css========================== */
+
+
+  /* =========================
+   MOBILE OPTIMIZATION FIX
+========================= */
+
+@media (max-width: 768px) {
+
+  /* Disable custom cursor on mobile */
+  body {
+    cursor: auto;
+  }
+  .cursor, .cursor-ring {
+    display: none !important;
+  }
+
+  /* NAVBAR MOBILE */
+  nav {
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: var(--cream);
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+    transform: translateY(-120%);
+    transition: 0.4s ease;
+  }
+
+  .nav-links.active {
+    transform: translateY(0);
+  }
+
+  /* HERO FIX */
+  .hero {
+    height: auto;
+  }
+
+  .hero-left {
+    padding: 6rem 1.5rem 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .hero-desc {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-scroll {
+    display: none;
+  }
+
+  /* ABOUT */
+  .about-content {
+    padding: 3rem 1.5rem;
+  }
+
+  /* MENU */
+  .menu-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .menu-card {
+    padding: 1.8rem;
+  }
+
+  /* EXPERIENCE */
+  .experience-content {
+    padding: 3rem 1.5rem;
+  }
+
+  /* TESTIMONIAL */
+  .testimonial-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .testimonial-quote {
+    font-size: 1.5rem;
+  }
+
+  /* INFO */
+  .info-block {
+    padding: 3rem 1.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+}
+
+
+
+/* ---------------extra file chatgpt--------------- */
+
+
+/* =========================
+   MOBILE RESPONSIVE FIX
+========================= */
+
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  nav {
+    padding: 15px 20px;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: -100%;
+    background: #0f0f0f;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    transition: 0.4s ease;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  /* HERO */
+  .hero {
+    flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 100%;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* MENU GRID */
+  .menu-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* ABOUT SECTION */
+  .about {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .about-visual,
+  .about-content {
+    width: 100%;
+  }
+
+  /* EXPERIENCE */
+  .experience {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .experience-visual {
+    flex-direction: column;
+  }
+
+  /* INFO SECTION */
+  .info-section {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  /* FOOTER */
+  footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+}

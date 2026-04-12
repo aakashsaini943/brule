@@ -52,13 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =========================
      HAMBURGER MENU
   ========================= */
-  const hamburger = document.getElementById('hamburger');
-  if (hamburger) {
-    hamburger.addEventListener('click', function () {
-      this.classList.toggle('open');
-    });
-  }
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.querySelector('.nav-links');
 
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('active');
+  });
+}
   /* =========================
      SCROLL REVEAL
   ========================= */
@@ -143,4 +145,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+});
+
+
+
+
+// -----------------extra file chatgppt--------------------
+
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.querySelector(".nav-links");
+
+hamburger.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
 });
