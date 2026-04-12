@@ -4,6 +4,11 @@ metadata:
   name: brule-deployment
 spec:
   replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       app: brule
@@ -14,6 +19,22 @@ spec:
     spec:
       containers:
       - name: brule
-        image: IMAGE_TAG
+        image: IMAGE_TAG   # 👈 CI will replace this
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
+
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          
