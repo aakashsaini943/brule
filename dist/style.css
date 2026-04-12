@@ -23,7 +23,7 @@
 
   /* CUSTOM CURSOR */
   .cursor {
-    width: 12px; height: 12px;
+    width: 13px; height: 12px;
     background: var(--caramel);
     border-radius: 50%;
     position: fixed; top: 0; left: 0;
