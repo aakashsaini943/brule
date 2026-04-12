@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Brule-deployment
+  name: brule-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: Brule
+      app: brule
   template:
     metadata:
       labels:
-        app: Brule
+        app: brule
     spec:
       containers:
-      - name: Brule
+      - name: brule
         image: IMAGE_TAG
         ports:
         - containerPort: 80
