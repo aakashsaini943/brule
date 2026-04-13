@@ -4,11 +4,6 @@ metadata:
   name: brule-deployment
 spec:
   replicas: 2
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
   selector:
     matchLabels:
       app: brule
@@ -17,9 +12,12 @@ spec:
       labels:
         app: brule
     spec:
+      imagePullSecrets:
+        - name: jfrog-secret   # 🔐 required for private registry
+
       containers:
       - name: brule
-        image: brule:latest # dummy (CI will replace)
+        image: nginx  # 🔁 placeholder (pipeline will override)
         ports:
         - containerPort: 80
 
@@ -36,3 +34,11 @@ spec:
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+  progressDeadlineSeconds: 120
