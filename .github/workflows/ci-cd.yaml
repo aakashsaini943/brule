@@ -1,4 +1,4 @@
-name: CI-CD Pipeline
+name: CI-CD Pipeline (KinD)
 
 on:
   push:
@@ -23,40 +23,46 @@ jobs:
         VERSION=v$(date +%s)
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+    # 🔐 Login to JFrog
     - name: Docker Login
       run: |
         echo "${{ secrets.JFROG_PASSWORD }}" | docker login ${{ secrets.JFROG_REGISTRY }} \
         -u ${{ secrets.JFROG_USERNAME }} \
         --password-stdin
 
+    # 🐳 Build Image
     - name: Build Image
       run: |
         docker build -t ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
 
+    # 🚀 Push Image
     - name: Push Image
       run: |
         docker push ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-    - name: Setup Kubeconfig
-      run: |
-        mkdir -p $HOME/.kube
-        echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+    # 🔥 Setup KinD Cluster (NO kubeconfig needed)
+    - name: Setup KinD
+      uses: helm/kind-action@v1
 
+    # ✅ Verify cluster
     - name: Verify Cluster
       run: |
         kubectl cluster-info
         kubectl get nodes
 
+    # 📦 Deploy base YAML
     - name: Apply Manifests
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
 
+    # 🔄 Update image dynamically
     - name: Update Image
       run: |
         kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
         ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
+    # 🚦 Rollout (zero downtime)
     - name: Rollout Status
       run: |
         kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }}

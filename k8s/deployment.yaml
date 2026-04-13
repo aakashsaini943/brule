@@ -19,8 +19,7 @@ spec:
     spec:
       containers:
       - name: brule
-        image: nginx   # 👈 temporary dummy (CI will override)
-        imagePullPolicy: Always
+        image: nginx   # dummy (CI will replace)
         ports:
         - containerPort: 80
 
