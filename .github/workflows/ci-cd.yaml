@@ -41,8 +41,10 @@ jobs:
         docker push ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
     # 🔥 Setup KinD
-    - name: Setup KinD
-      uses: helm/kind-action@v1
+    - name: Setup Minikube
+      uses: medyagh/setup-minikube@latest
+      with:
+        driver: docker
 
     # 🔍 Verify cluster
     - name: Verify Cluster
