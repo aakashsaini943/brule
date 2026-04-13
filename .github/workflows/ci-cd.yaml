@@ -31,11 +31,11 @@ jobs:
 
     - name: Build Image
       run: |
-        docker build -t ${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
+        docker build -t ${{ secrets.JFROG_REGISTRY }}/brule/${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
 
     - name: Push Image
       run: |
-        docker push ${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        docker push ${{ secrets.JFROG_REGISTRY }}/brule/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
     - name: Setup Kubeconfig
       run: |
@@ -55,7 +55,7 @@ jobs:
     - name: Update Image
       run: |
         kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
-        ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/brule/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
     - name: Rollout Status
       run: |
