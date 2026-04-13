@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: brule
-        image: IMAGE_TAG   # 👈 CI will replace this
+        image: nginx   # 👈 temporary dummy (CI will override)
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -37,4 +37,3 @@ spec:
             port: 80
           initialDelaySeconds: 10
           periodSeconds: 10
-          

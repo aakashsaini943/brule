@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout Code
       uses: actions/checkout@v3
 
@@ -38,31 +37,26 @@ jobs:
       run: |
         docker push ${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-    # ✅ Setup kubeconfig (REAL cluster only)
     - name: Setup Kubeconfig
       run: |
         mkdir -p $HOME/.kube
         echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
 
-    # ✅ Verify cluster (debug)
     - name: Verify Cluster
       run: |
         kubectl cluster-info
         kubectl get nodes
 
-    # ✅ Apply base YAML
     - name: Apply Manifests
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
 
-    # ✅ Inject new image (dynamic)
     - name: Update Image
       run: |
         kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
         ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/docker-trial/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-    # ✅ Zero downtime rollout
     - name: Rollout Status
       run: |
         kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }}
