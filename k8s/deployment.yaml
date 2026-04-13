@@ -4,27 +4,22 @@ metadata:
   name: brule-deployment
 spec:
   replicas: 2
-
   selector:
     matchLabels:
       app: brule
-
   template:
     metadata:
       labels:
         app: brule
-
     spec:
       imagePullSecrets:
-        - name: jfrog-secret
+        - name: jfrog-secret   # 🔐 required for private registry
 
       containers:
       - name: brule
-        image: brule:latest   # 👉 LOCAL TESTING
-        imagePullPolicy: Never
-
+        image: nginx  # 🔁 placeholder (pipeline will override)
         ports:
-        - containerPort: 80   # 👉 change to 3000 if node app
+        - containerPort: 80
 
         readinessProbe:
           httpGet:

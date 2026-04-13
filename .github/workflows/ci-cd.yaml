@@ -23,28 +23,34 @@ jobs:
         VERSION=v$(date +%s)
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-    # 🔐 Login JFrog
+    # 🔐 Login to JFrog
     - name: Docker Login
       run: |
         echo "${{ secrets.JFROG_PASSWORD }}" | docker login ${{ secrets.JFROG_REGISTRY }} \
         -u ${{ secrets.JFROG_USERNAME }} \
         --password-stdin
 
-    # 🐳 Build
+    # 🐳 Build Image
     - name: Build Image
       run: |
         docker build -t ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
 
-    # 🚀 Push
+    # 🚀 Push Image
     - name: Push Image
       run: |
         docker push ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-    # 🔥 KinD
+    # 🔥 Setup KinD
     - name: Setup KinD
       uses: helm/kind-action@v1
 
-    # 🔐 Secret
+    # 🔍 Verify cluster
+    - name: Verify Cluster
+      run: |
+        kubectl cluster-info
+        kubectl get nodes
+
+    # 🔐 Create image pull secret
     - name: Create Image Pull Secret
       run: |
         kubectl create secret docker-registry jfrog-secret \
@@ -53,24 +59,24 @@ jobs:
           --docker-password=${{ secrets.JFROG_PASSWORD }} \
           --docker-email=dev@example.com || true
 
-    # 📦 Deploy
+    # 📦 Apply manifests
     - name: Apply Manifests
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
 
-    # 🔄 Update Image
+    # 🔄 Update image dynamically
     - name: Update Image
       run: |
         kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
         ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-    # 🚦 Rollout
+    # 🚦 Rollout with timeout
     - name: Rollout Status
       run: |
         kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} --timeout=120s
 
-    # 🐞 Debug
+    # 🐞 Debug if failed
     - name: Debug Pods
       if: failure()
       run: |
