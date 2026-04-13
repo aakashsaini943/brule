@@ -5,6 +5,10 @@ KUBE_CONFIG      ← base64 encoded kubeconfig
 
 
 
+https://trialuy8zrn.jfrog.io/artifactory/api/docker/brule-docker
+
+
+
 🔥 What You Achieved (Important)
 
 👉 This pipeline now does:
