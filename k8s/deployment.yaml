@@ -17,7 +17,7 @@ spec:
 
       containers:
       - name: brule
-        image: nginx  # 🔁 placeholder (pipeline will override)
+        image: brule:latest  # 🔁 placeholder (pipeline will override)
         ports:
         - containerPort: 80
 
