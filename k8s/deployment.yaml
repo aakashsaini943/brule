@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: brule
-        image: nginx   # dummy (CI will replace)
+        image: brule:latest # dummy (CI will replace)
         ports:
         - containerPort: 80
 
