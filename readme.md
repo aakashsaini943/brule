@@ -9,9 +9,9 @@ https://trialuy8zrn.jfrog.io/artifactory/api/docker/brule-docker
 
 
 
-🔥 What You Achieved (Important)
+ What You Achieved (Important)
 
-👉 This pipeline now does:
+ This pipeline now does:
 
 Code Push
 ↓
