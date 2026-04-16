@@ -1,0 +1,39 @@
+name: CD - Deploy to K8s ☸️
+
+on:
+  workflow_run:
+    workflows: ["CI - Build & Push 🐳"]
+    types:
+      - completed
+
+env:
+  DEPLOYMENT_NAME: brule-deployment
+  CONTAINER_NAME: brule
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted   # 🔥 your local KinD / Minikube
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Extract Image Tag
+      run: |
+        IMAGE=$(echo "${{ github.event.workflow_run.head_commit.message }}" | grep -o 'v[0-9]*' || echo "")
+        echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+
+    # ⚠️ Better way: use latest tag
+    - name: Deploy Latest Image
+      run: |
+        kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
+        ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/brule-docker/brule:latest
+
+    - name: Rollout Status
+      run: |
+        kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} --timeout=120s
+
+    - name: Verify
+      run: |
+        kubectl get pods -o wide
