@@ -1,45 +1,27 @@
-name: CI - Build & Push 🐳
+name: CI - Build & Push Docker
 
 on:
   push:
-    branches:
-      - main
-
-env:
-  IMAGE_NAME: brule
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    outputs:
-      image: ${{ steps.set-image.outputs.image }}
-
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Generate Version
-      id: version
-      run: |
-        VERSION=v$(date +%s)
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
-
     - name: Docker Login (JFrog)
       run: |
-        echo "${{ secrets.JFROG_PASSWORD }}" | docker login ${{ secrets.JFROG_REGISTRY }} \
+        docker login ${{ secrets.JFROG_URL }} \
         -u ${{ secrets.JFROG_USERNAME }} \
-        --password-stdin
+        -p ${{ secrets.JFROG_TOKEN }}
 
     - name: Build Image
       run: |
-        docker build -t ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
+        docker build -t ${{ secrets.JFROG_URL }}/devops-app:latest .
 
     - name: Push Image
       run: |
-        docker push ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-
-    - name: Set Image Output
-      id: set-image
-      run: |
-        echo "image=${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}" >> $GITHUB_OUTPUT
+        docker push ${{ secrets.JFROG_URL }}/devops-app:latest

@@ -1,60 +1,28 @@
-name: CD - Deploy to K8s ☸️
+name: CD - Deploy to Kubernetes
 
 on:
   workflow_run:
-    workflows: ["CI - Build & Push 🐳"]
+    workflows: ["CI - Build & Push Docker"]
     types:
       - completed
 
-env:
-  DEPLOYMENT_NAME: brule-deployment
-  CONTAINER_NAME: brule
-
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: self-hosted   # must have kubectl + cluster access
+    runs-on: self-hosted
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # ✅ Verify Kubernetes connection
-    - name: Check Cluster
+    - name: Set Kubeconfig
       run: |
-        kubectl cluster-info
-        kubectl get nodes
+        kubectl config use-context minikube
 
-    # ✅ Ensure secret exists
-    - name: Create Image Pull Secret
-      run: |
-        kubectl create secret docker-registry jfrog-secret \
-          --docker-server=${{ secrets.JFROG_REGISTRY }} \
-          --docker-username=${{ secrets.JFROG_USERNAME }} \
-          --docker-password=${{ secrets.JFROG_PASSWORD }} \
-          --docker-email=dev@example.com || true
-
-    # ✅ Apply manifests (first time safe)
-    - name: Apply Kubernetes Manifests
+    - name: Deploy to Kubernetes
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
 
-    # ✅ Deploy latest image
-    - name: Update Image (Rolling Update)
+    - name: Force Rollout Restart
       run: |
-        kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
-        ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/brule-docker/brule:latest
-
-    # ✅ Watch rollout
-    - name: Rollout Status
-      run: |
-        kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} --timeout=120s
-
-    # ✅ Debug info
-    - name: Verify Deployment
-      run: |
-        kubectl get pods -o wide
-        kubectl get svc
-
-        # ===========
+        kubectl rollout restart deployment devops-app
