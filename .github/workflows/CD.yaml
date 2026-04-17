@@ -1,22 +1,19 @@
-name: CD - Deploy to K8s ☸️
+name: CD-Deploy-K8s
 
 on:
   workflow_run:
+    workflows: ["CI-Build-Push"]
     types:
       - completed
-
-env:
-  DEPLOYMENT_NAME: brule-deployment
-  CONTAINER_NAME: brule
 
 jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on:  DESKTOP-AAKASH
+    runs-on: DESKTOP-AAKASH
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+    - name: Test Runner
+      run: echo "CD TRIGGERED SUCCESSFULLY 🚀"
 
     - name: Check Cluster
       run: |
