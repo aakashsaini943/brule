@@ -13,19 +13,17 @@ env:
 jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: self-hosted   # must have kubectl + cluster access
+    runs-on: self-hosted
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # ✅ Verify Kubernetes connection
     - name: Check Cluster
       run: |
         kubectl cluster-info
         kubectl get nodes
 
-    # ✅ Ensure secret exists
     - name: Create Image Pull Secret
       run: |
         kubectl create secret docker-registry jfrog-secret \
@@ -34,27 +32,21 @@ jobs:
           --docker-password=${{ secrets.JFROG_PASSWORD }} \
           --docker-email=dev@example.com || true
 
-    # ✅ Apply manifests (first time safe)
-    - name: Apply Kubernetes Manifests
+    - name: Apply Manifests
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
 
-    # ✅ Deploy latest image
-    - name: Update Image (Rolling Update)
+    - name: Update Image
       run: |
         kubectl set image deployment/${{ env.DEPLOYMENT_NAME }} \
         ${{ env.CONTAINER_NAME }}=${{ secrets.JFROG_REGISTRY }}/brule-docker/brule:latest
 
-    # ✅ Watch rollout
     - name: Rollout Status
       run: |
         kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} --timeout=120s
 
-    # ✅ Debug info
-    - name: Verify Deployment
+    - name: Verify
       run: |
         kubectl get pods -o wide
         kubectl get svc
-
-        # ===========
