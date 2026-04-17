@@ -43,3 +43,5 @@ jobs:
       id: set-image
       run: |
         echo "image=${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}" >> $GITHUB_OUTPUT
+
+        # ------------------------------
