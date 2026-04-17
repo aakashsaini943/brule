@@ -2,14 +2,18 @@ name: CD-Deploy-K8s
 
 on:
   workflow_run:
-    workflows: ["CI-Build-Push"]
+    workflows: ["CI - Build & Push 🐳"]
     types:
       - completed
+
+env:
+  DEPLOYMENT_NAME: brule-deployment
+  CONTAINER_NAME: brule
 
 jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: DESKTOP-AAKASH
+    runs-on: self-hosted
 
     steps:
     - name: Test Runner
@@ -22,11 +26,12 @@ jobs:
 
     - name: Create Image Pull Secret
       run: |
+        kubectl delete secret jfrog-secret --ignore-not-found
         kubectl create secret docker-registry jfrog-secret \
           --docker-server=${{ secrets.JFROG_REGISTRY }} \
           --docker-username=${{ secrets.JFROG_USERNAME }} \
           --docker-password=${{ secrets.JFROG_PASSWORD }} \
-          --docker-email=dev@example.com || true
+          --docker-email=dev@example.com
 
     - name: Apply Manifests
       run: |
@@ -46,5 +51,3 @@ jobs:
       run: |
         kubectl get pods -o wide
         kubectl get svc
-
-        # -----------------

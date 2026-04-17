@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 env:
   IMAGE_NAME: brule
 
@@ -16,40 +19,44 @@ jobs:
       image: ${{ steps.set-image.outputs.image }}
 
     steps:
+    # 🔹 Checkout Code
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    # 🔹 Generate Unique Version Tag
     - name: Generate Version
       id: version
       run: |
         VERSION=v$(date +%s)
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+    # 🔹 Docker Login (JFrog)
     - name: Docker Login (JFrog)
       run: |
         echo "${{ secrets.JFROG_PASSWORD }}" | docker login ${{ secrets.JFROG_REGISTRY }} \
         -u ${{ secrets.JFROG_USERNAME }} \
         --password-stdin
 
+    # 🔹 Build Docker Image
     - name: Build Image
       run: |
         docker build -t ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
 
+    # 🔹 Push Versioned Image
     - name: Push Image
       run: |
         docker push ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
-    - name: Tag Latest (IMPORTANT)
+    # 🔹 Tag & Push Latest (for CD simplicity)
+    - name: Tag Latest
       run: |
         docker tag ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }} \
                    ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:latest
 
         docker push ${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:latest
 
+    # 🔹 Output Image (for advanced CD later)
     - name: Set Image Output
       id: set-image
       run: |
         echo "image=${{ secrets.JFROG_REGISTRY }}/brule-docker/${{ env.IMAGE_NAME }}:${{ env.VERSION }}" >> $GITHUB_OUTPUT
-
-
-        # --------------
